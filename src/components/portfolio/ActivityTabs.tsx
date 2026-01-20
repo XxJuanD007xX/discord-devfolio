@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 interface ActivityTabsProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
@@ -8,6 +6,7 @@ interface ActivityTabsProps {
 const tabs = [
   { id: 'board', label: 'Board' },
   { id: 'activity', label: 'Actividad' },
+  { id: 'hobbies', label: 'Mis Hobbies' },
 ];
 
 export const ActivityTabs = ({ activeTab, onTabChange }: ActivityTabsProps) => {

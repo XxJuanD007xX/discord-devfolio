@@ -1,6 +1,7 @@
-import { Github, Linkedin, Mail, ExternalLink, MapPin, Calendar, Twitter } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, MapPin, Calendar, Twitter, Sparkles, Zap, Award, Coffee, Code, Rocket, Heart } from 'lucide-react';
 import avatarImage from '@/assets/avatar.png';
 import bannerImage from '@/assets/banner.jpg';
+import { AvatarSpeech } from './AvatarSpeech';
 
 const skills = [
   { name: 'React', color: 'bg-accent-cyan' },
@@ -13,6 +14,16 @@ const skills = [
   { name: 'Docker', color: 'bg-accent-cyan' },
   { name: 'GraphQL', color: 'bg-accent-pink' },
   { name: 'Tailwind', color: 'bg-accent-cyan' },
+];
+
+const decorativeTags = [
+  { icon: Sparkles, label: 'Creativo', color: 'text-accent-yellow' },
+  { icon: Zap, label: 'Rápido', color: 'text-accent-orange' },
+  { icon: Award, label: 'Certificado', color: 'text-accent-purple' },
+  { icon: Coffee, label: 'Café lover', color: 'text-accent-orange' },
+  { icon: Code, label: 'Clean Code', color: 'text-accent-cyan' },
+  { icon: Rocket, label: 'Innovador', color: 'text-accent-pink' },
+  { icon: Heart, label: 'Apasionado', color: 'text-accent-red' },
 ];
 
 const socialLinks = [
@@ -40,6 +51,7 @@ export const ProfileCard = () => {
             className="avatar"
           />
           <div className="status-indicator status-online" title="Disponible" />
+          <AvatarSpeech />
         </div>
       </div>
 
@@ -59,6 +71,20 @@ export const ProfileCard = () => {
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-sm mb-4">
           <span className="text-lg">💻</span>
           <span className="text-foreground">Construyendo el futuro, una línea a la vez</span>
+        </div>
+
+        {/* Decorative Tags */}
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {decorativeTags.map((tag, index) => (
+            <span 
+              key={tag.label}
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-secondary/60 text-xs role-tag-animate"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              <tag.icon className={`w-3 h-3 ${tag.color}`} />
+              <span className="text-secondary-foreground">{tag.label}</span>
+            </span>
+          ))}
         </div>
 
         {/* Divider */}

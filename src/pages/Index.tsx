@@ -6,10 +6,11 @@ import { StatsWidget } from '@/components/portfolio/StatsWidget';
 import { ProjectsWidget } from '@/components/portfolio/ProjectsWidget';
 import { ExperienceWidget } from '@/components/portfolio/ExperienceWidget';
 import { EducationWidget } from '@/components/portfolio/EducationWidget';
-import { TechStackWidget } from '@/components/portfolio/TechStackWidget';
 import { ContactWidget } from '@/components/portfolio/ContactWidget';
 import { ActivityTabs } from '@/components/portfolio/ActivityTabs';
 import { ActivityWidget } from '@/components/portfolio/ActivityWidget';
+import { HobbiesWidget } from '@/components/portfolio/HobbiesWidget';
+import { ColorPalettePicker } from '@/components/portfolio/ColorPalettePicker';
 import gsap from 'gsap';
 
 const Index = () => {
@@ -89,23 +90,33 @@ const Index = () => {
             </div>
 
             {/* Content based on active tab */}
-            {activeTab === 'board' ? (
+            {activeTab === 'board' && (
               <div className="space-y-4">
                 <StatsWidget />
                 <ProjectsWidget />
-                <TechStackWidget />
                 <ExperienceWidget />
                 <EducationWidget />
                 <ContactWidget />
               </div>
-            ) : (
+            )}
+            
+            {activeTab === 'activity' && (
               <div className="space-y-4">
                 <ActivityWidget />
+              </div>
+            )}
+
+            {activeTab === 'hobbies' && (
+              <div className="space-y-4">
+                <HobbiesWidget />
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Color Palette Picker */}
+      <ColorPalettePicker />
 
       {/* Background glow effect */}
       <div 
