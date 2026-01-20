@@ -1,7 +1,8 @@
-import { Github, Linkedin, Mail, ExternalLink, MapPin, Calendar, Twitter, Sparkles, Zap, Award, Coffee, Code, Rocket, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, Twitter, Sparkles, Zap, Award, Coffee, Code, Rocket, Heart, Sword, Shield, Home, Pencil } from 'lucide-react';
 import avatarImage from '@/assets/avatar.png';
 import bannerImage from '@/assets/banner.jpg';
 import { AvatarSpeech } from './AvatarSpeech';
+import { Button } from '@/components/ui/button';
 
 const skills = [
   { name: 'React', color: 'bg-accent-cyan' },
@@ -17,13 +18,13 @@ const skills = [
 ];
 
 const decorativeTags = [
-  { icon: Sparkles, label: 'Creativo', color: 'text-accent-yellow' },
-  { icon: Zap, label: 'Rápido', color: 'text-accent-orange' },
-  { icon: Award, label: 'Certificado', color: 'text-accent-purple' },
-  { icon: Coffee, label: 'Café lover', color: 'text-accent-orange' },
-  { icon: Code, label: 'Clean Code', color: 'text-accent-cyan' },
-  { icon: Rocket, label: 'Innovador', color: 'text-accent-pink' },
-  { icon: Heart, label: 'Apasionado', color: 'text-accent-red' },
+  { icon: Sparkles, label: 'admin', color: 'text-accent-red' },
+  { icon: Zap, label: 'moderators', color: 'text-accent-green' },
+  { icon: Award, label: 'tea time', color: 'text-accent-purple' },
+  { icon: Coffee, label: 'party planners', color: 'text-accent-orange' },
+  { icon: Code, label: 'movie night', color: 'text-accent-yellow' },
+  { icon: Rocket, label: 'book club', color: 'text-accent-red' },
+  { icon: Heart, label: 'tabletop gamers', color: 'text-accent-blue' },
 ];
 
 const socialLinks = [
@@ -58,13 +59,38 @@ export const ProfileCard = () => {
       {/* Profile Info */}
       <div className="p-4 pt-2">
         {/* Name and Username */}
-        <div className="mb-4">
+        <div className="mb-2">
           <h1 className="text-2xl font-bold text-foreground">
-            Tu Nombre
+            Wumpus
           </h1>
-          <p className="text-muted-foreground text-sm">
-            @desarrollador_fullstack
-          </p>
+          <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-sm mt-1">
+            <span>itsmewumpus</span>
+            <span>•</span>
+            <span>they/them</span>
+            <span>•</span>
+            <div className="flex items-center gap-1">
+              <Sword className="w-3 h-3" />
+              <span className="font-mono">XXXX</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Shield className="w-3 h-3 text-accent-blue" />
+              <div className="flex -space-x-1">
+                <div className="w-3 h-3 rounded-full bg-accent-purple border border-background" />
+                <div className="w-3 h-3 rounded-full bg-accent-orange border border-background" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2 mb-4">
+          <Button size="sm" className="bg-[#5865F2] hover:bg-[#4752C4] text-white flex gap-2 h-9 px-4">
+            <Pencil className="w-4 h-4" />
+            Edit Profile
+          </Button>
+          <Button size="icon" variant="secondary" className="h-9 w-9 bg-secondary hover:bg-muted">
+            <Home className="w-4 h-4" />
+          </Button>
         </div>
 
         {/* Status Badge */}
@@ -73,18 +99,11 @@ export const ProfileCard = () => {
           <span className="text-foreground">Construyendo el futuro, una línea a la vez</span>
         </div>
 
-        {/* Decorative Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {decorativeTags.map((tag, index) => (
-            <span 
-              key={tag.label}
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-secondary/60 text-xs role-tag-animate"
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
-              <tag.icon className={`w-3 h-3 ${tag.color}`} />
-              <span className="text-secondary-foreground">{tag.label}</span>
-            </span>
-          ))}
+        {/* Decorative Tags - Bio phrases in the image */}
+        <div className="space-y-0.5 mb-4">
+          <p className="text-sm text-secondary-foreground">who am i</p>
+          <p className="text-sm text-secondary-foreground">what am i</p>
+          <p className="text-sm text-secondary-foreground">why am i</p>
         </div>
 
         {/* Divider */}
@@ -102,35 +121,65 @@ export const ProfileCard = () => {
           </p>
         </div>
 
-        {/* Location & Member Since */}
-        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
-          <div className="flex items-center gap-1.5">
-            <MapPin className="w-4 h-4" />
-            <span>Ciudad, País</span>
+        {/* Member Since Section */}
+        <div className="mb-4">
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">
+            Member since
+          </h3>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-secondary-foreground">
+            <div className="flex items-center gap-1.5">
+              <Github className="w-4 h-4 text-muted-foreground" />
+              <span>March 2019</span>
+            </div>
+            <span className="text-muted-foreground">•</span>
+            <div className="flex items-center gap-1.5">
+              <div className="w-4 h-4 rounded bg-accent-pink flex items-center justify-center">
+                <Sparkles className="w-2.5 h-2.5 text-white" />
+              </div>
+              <span>November 2022</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Calendar className="w-4 h-4" />
-            <span>Desarrollando desde 2019</span>
+        </div>
+
+        {/* Roles Section - Matching the image more closely */}
+        <div className="mb-4">
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+            Roles
+          </h3>
+          <div className="flex flex-wrap gap-1.5">
+            {decorativeTags.map((tag, index) => (
+              <span
+                key={tag.label}
+                className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-secondary/80 text-[11px] font-medium role-tag-animate"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
+                <span className={`w-2.5 h-2.5 rounded-full ${tag.color.replace('text-', 'bg-')}`} />
+                <span className="text-secondary-foreground">{tag.label}</span>
+              </span>
+            ))}
+            <button className="w-6 h-6 flex items-center justify-center rounded-full bg-secondary hover:bg-muted text-muted-foreground">
+              +
+            </button>
           </div>
         </div>
 
         {/* Divider */}
         <div className="h-px bg-border my-4" />
 
-        {/* Skills/Roles Section */}
+        {/* Technologies Section */}
         <div className="mb-4">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3">
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
             Tecnologías
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {skills.map((skill, index) => (
               <span 
                 key={skill.name}
-                className="role-tag role-tag-animate"
-                style={{ animationDelay: `${index * 0.05}s` }}
+                className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-secondary/40 text-[11px] font-medium role-tag-animate border border-border/50"
+                style={{ animationDelay: `${(index + decorativeTags.length) * 0.05}s` }}
               >
-                <span className={`role-tag-dot ${skill.color}`} />
-                {skill.name}
+                <div className={`w-2 h-2 rounded-sm ${skill.color}`} />
+                <span className="text-secondary-foreground/90">{skill.name}</span>
               </span>
             ))}
           </div>
@@ -141,8 +190,8 @@ export const ProfileCard = () => {
 
         {/* Social Links */}
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3">
-            Encuéntrame en
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+            Find me on
           </h3>
           <div className="space-y-2">
             {socialLinks.map((link, index) => (
