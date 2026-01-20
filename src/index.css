@@ -2,95 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Discord-inspired Design System for Developer Portfolio */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Discord Dark Theme Colors */
+    --background: 220 8% 12%;
+    --background-secondary: 220 7% 17%;
+    --background-tertiary: 220 6% 14%;
+    --foreground: 210 20% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 7% 17%;
+    --card-foreground: 210 20% 98%;
+    --card-hover: 220 7% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 7% 17%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Discord Blurple variant / Magenta accent */
+    --primary: 330 85% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 330 100% 65%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary */
+    --secondary: 220 6% 22%;
+    --secondary-foreground: 210 20% 80%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted */
+    --muted: 220 6% 25%;
+    --muted-foreground: 215 15% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent colors for tags/roles */
+    --accent: 235 86% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --accent-red: 0 70% 55%;
+    --accent-orange: 30 90% 55%;
+    --accent-yellow: 45 95% 55%;
+    --accent-green: 140 70% 45%;
+    --accent-cyan: 180 70% 50%;
+    --accent-blue: 210 100% 60%;
+    --accent-purple: 270 70% 60%;
+    --accent-pink: 330 85% 60%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 6% 25%;
+    --input: 220 6% 22%;
+    --ring: 330 85% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Status colors */
+    --status-online: 140 70% 45%;
+    --status-idle: 40 90% 55%;
+    --status-dnd: 0 70% 55%;
+    --status-offline: 220 6% 35%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Gradients */
+    --gradient-banner: linear-gradient(135deg, hsl(330, 85%, 55%) 0%, hsl(270, 80%, 50%) 50%, hsl(220, 90%, 55%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(220, 7%, 20%) 0%, hsl(220, 7%, 17%) 100%);
+    --gradient-glow: radial-gradient(circle at center, hsl(330, 85%, 60%, 0.15) 0%, transparent 70%);
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Shadows */
+    --shadow-sm: 0 1px 2px hsl(0, 0%, 0%, 0.3);
+    --shadow-md: 0 4px 12px hsl(0, 0%, 0%, 0.4);
+    --shadow-lg: 0 8px 24px hsl(0, 0%, 0%, 0.5);
+    --shadow-glow: 0 0 30px hsl(330, 85%, 60%, 0.3);
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    /* Sidebar (keeping for compatibility) */
+    --sidebar-background: 220 8% 12%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 330 85% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 220 6% 22%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 220 6% 25%;
+    --sidebar-ring: 330 85% 60%;
   }
 }
 
@@ -99,7 +89,189 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  /* Discord Card Style */
+  .discord-card {
+    @apply rounded-xl border border-border;
+    background: hsl(var(--card));
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .discord-card:hover {
+    background: hsl(var(--card-hover));
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Widget styling */
+  .widget {
+    @apply discord-card p-5;
+  }
+
+  .widget-header {
+    @apply flex items-center gap-2 mb-4 text-sm font-semibold uppercase tracking-wide;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Role/Skill Tags */
+  .role-tag {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200;
+    background: hsl(var(--secondary));
+  }
+
+  .role-tag:hover {
+    transform: scale(1.05);
+  }
+
+  .role-tag-dot {
+    @apply w-2.5 h-2.5 rounded-full;
+  }
+
+  /* Status indicator */
+  .status-indicator {
+    @apply absolute bottom-0 right-0 w-5 h-5 rounded-full border-4;
+    border-color: hsl(var(--card));
+  }
+
+  .status-online {
+    background: hsl(var(--status-online));
+  }
+
+  /* Profile Banner */
+  .profile-banner {
+    @apply w-full h-32 rounded-t-xl bg-cover bg-center;
+    background: var(--gradient-banner);
+  }
+
+  /* Avatar */
+  .avatar-wrapper {
+    @apply relative -mt-16 ml-4;
+  }
+
+  .avatar {
+    @apply w-24 h-24 rounded-full border-4 object-cover;
+    border-color: hsl(var(--card));
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Social Link */
+  .social-link {
+    @apply flex items-center gap-3 p-2.5 rounded-lg transition-all duration-200;
+    background: hsl(var(--secondary));
+  }
+
+  .social-link:hover {
+    background: hsl(var(--muted));
+    transform: translateX(4px);
+  }
+
+  /* Project Card */
+  .project-card {
+    @apply discord-card overflow-hidden;
+  }
+
+  .project-image {
+    @apply w-full h-40 object-cover;
+  }
+
+  /* Stat Box */
+  .stat-box {
+    @apply text-center p-3 rounded-lg;
+    background: hsl(var(--secondary));
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold;
+    color: hsl(var(--foreground));
+  }
+
+  .stat-label {
+    @apply text-xs uppercase tracking-wide mt-1;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Timeline */
+  .timeline-item {
+    @apply relative pl-6 pb-6 border-l-2;
+    border-color: hsl(var(--border));
+  }
+
+  .timeline-item:last-child {
+    @apply pb-0;
+  }
+
+  .timeline-dot {
+    @apply absolute left-0 top-0 w-3 h-3 rounded-full -translate-x-1/2;
+    background: hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent-blue)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  /* Smooth scroll container */
+  .scroll-container {
+    @apply h-screen overflow-y-auto;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+
+  /* GSAP animation utilities */
+  .gsap-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .gsap-slide-left {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  .gsap-slide-right {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  .gsap-scale-in {
+    opacity: 0;
+    transform: scale(0.9);
   }
 }
