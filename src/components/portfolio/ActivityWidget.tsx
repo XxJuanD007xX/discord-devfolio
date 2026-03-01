@@ -26,6 +26,8 @@ const workflow = [
       { name: 'Gemini', icon: BrandIcons.Gemini, desc: 'Asistente Principal', color: '#4E88D4', badge: '★ Principal' },
       { name: 'Claude', icon: BrandIcons.Claude, desc: 'Consultas Complejas', color: '#D97757', badge: '🧠 Avanzado' },
       { name: 'ChatGPT', icon: BrandIcons.ChatGPT, desc: 'Generación', color: '#10A37F', badge: '⚡ Diario' },
+      { name: 'Jules (Google)', icon: BrandIcons.GoogleJules, desc: 'Asistente IA', color: '#715CD7', badge: '✨ IA' },
+      { name: 'GitHub Copilot', icon: BrandIcons.GitHubCopilot, desc: 'Asistente de Código', color: '#ffffff', badge: '🤖 IA' },
     ]
   },
   {
@@ -36,6 +38,7 @@ const workflow = [
       { name: 'Next.js', icon: BrandIcons.NextJS, desc: 'Framework', color: '#ffffff', badge: '★ Principal' },
       { name: 'Shadcn/ui', icon: BrandIcons.Shadcn, desc: 'Componentes', color: '#a78bfa', badge: '📦 Librería' },
       { name: 'Tailwind', icon: BrandIcons.Tailwind, desc: 'Styling', color: '#06B6D4', badge: '⚡ Diario' },
+      { name: 'Astro', icon: BrandIcons.Astro, desc: 'Framework', color: '#FF5D01', badge: '🚀 Web' },
       { name: 'React Bits', icon: BrandIcons.React, desc: 'Animaciones', color: '#61DAFB', badge: '✨ UI' },
       { name: 'Lovable', icon: BrandIcons.Lovable, desc: 'AI App Builder', color: '#E61363', badge: '🚀 Builder' },
     ]
@@ -46,8 +49,11 @@ const workflow = [
     accentColor: '#f0b232',
     items: [
       { name: 'Appwrite', icon: BrandIcons.Appwrite, desc: 'Backend as a Service', color: '#F02E65', badge: '★ Principal' },
-      { name: 'PostgreSQL', icon: BrandIcons.PostgreSQL, desc: 'Base de Datos', color: '#4169E1', badge: '🗄️ DB' },
+      { name: 'Firebase', icon: BrandIcons.Firebase, desc: 'Backend as a Service', color: '#FFCA28', badge: '🔥 BaaS' },
+      { name: 'Supabase', icon: BrandIcons.Supabase, desc: 'Backend as a Service', color: '#3ECF8E', badge: '⚡ BaaS' },
+      { name: 'Clerk', icon: BrandIcons.Clerk, desc: 'Autenticación', color: '#6C47FF', badge: '🔒 Auth' },
       { name: 'Postman', icon: BrandIcons.Postman, desc: 'API Testing', color: '#FF6C37', badge: '🔧 API' },
+      { name: 'PostgreSQL', icon: BrandIcons.PostgreSQL, desc: 'Base de Datos', color: '#4169E1', badge: '🗄️ DB' },
       { name: 'Vercel', icon: BrandIcons.Vercel, desc: 'Deployment', color: '#ffffff', badge: '🚀 Deploy' },
       { name: 'Hostinger', icon: BrandIcons.Hostinger, desc: 'Hosting', color: '#673AB7', badge: '🌐 Host' },
     ]
