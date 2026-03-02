@@ -52,6 +52,32 @@ const socialLinks = [
 export const ProfileCard = () => {
   const [isAvatarHovered, setIsAvatarHovered] = useState(false);
   const [status, setStatus] = useState<'online' | 'idle' | 'dnd' | 'invisible'>('online');
+  const [clickCount, setClickCount] = useState(0);
+  const [particles, setParticles] = useState<{ id: number; x: number; y: number; emoji: string }[]>([]);
+
+  const emojis = ['🦆', '✨', '💻', '🚀', '⭐', '❤️', '🔥', '🎉'];
+
+  const handleAvatarClick = (e: React.MouseEvent) => {
+    // Generate particle
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const newParticle = {
+      id: Date.now(),
+      x,
+      y,
+      emoji: emojis[Math.floor(Math.random() * emojis.length)]
+    };
+
+    setParticles(prev => [...prev, newParticle]);
+    setClickCount(prev => prev + 1);
+
+    // Remove particle after animation
+    setTimeout(() => {
+      setParticles(prev => prev.filter(p => p.id !== newParticle.id));
+    }, 1000);
+  };
 
   // Cambiar status aleatoriamente cada 4-8 segundos
   useEffect(() => {
@@ -115,12 +141,44 @@ export const ProfileCard = () => {
           <div className="absolute inset-0 -m-0.5 rounded-full bg-gradient-to-r from-[#5865F2] via-[#eb459e] via-[#f0b232] to-[#5865F2]" style={{ animation: 'spin-slow 3s linear infinite' }} />
 
           {/* Avatar PATO con efecto de animación wobble */}
-          <div className="relative z-10 p-1.5 bg-[#2b2d31] rounded-full">
+          <div
+            className="relative z-10 p-1.5 bg-[var(--bg-secondary,#2b2d31)] rounded-full cursor-pointer"
+            onClick={handleAvatarClick}
+            style={{
+              transform: clickCount > 10 ? `scale(${Math.min(1 + (clickCount-10)*0.02, 1.3)}) rotate(${clickCount * 5}deg)` : 'none',
+              transition: 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+            }}
+          >
             <img
               src={patoGif}
               alt="Pato Avatar"
-              className={`avatar relative z-10 transition-all duration-300 w-24 h-24 object-cover rounded-full ${isAvatarHovered ? 'scale-105' : ''}`}
+              className={`avatar relative z-10 transition-all duration-300 w-24 h-24 object-cover rounded-full ${isAvatarHovered ? 'scale-105' : ''} ${clickCount > 0 ? 'animate-pop-reaction' : ''}`}
+              style={{ borderColor: 'var(--bg-secondary, #2b2d31)' }}
             />
+
+            {/* Easter egg message */}
+            {clickCount >= 10 && (
+               <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-[var(--primary)] text-white text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap animate-slide-up-fade pointer-events-none z-50">
+                 ¡Nivel Secreto Desbloqueado! 🦆
+                 <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--primary)] rotate-45" />
+               </div>
+            )}
+
+            {/* Particles */}
+            {particles.map(p => (
+              <div
+                key={p.id}
+                className="absolute pointer-events-none text-xl z-50 animate-particle-float"
+                style={{
+                  left: p.x,
+                  top: p.y,
+                  transform: `translate(-50%, -50%) rotate(${Math.random() * 60 - 30}deg)`,
+                  textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+                }}
+              >
+                {p.emoji}
+              </div>
+            ))}
           </div>
 
           {/* Status indicator (Interactive Dropdown) */}
@@ -251,7 +309,7 @@ export const ProfileCard = () => {
                     className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-secondary/80 text-[11px] font-medium role-tag-animate hover:bg-secondary hover:text-foreground transition-colors cursor-pointer"
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
-                    <span className={`w-2.5 h-2.5 rounded-full ${tag.color.replace('text-', 'bg-')}`} />
+                    <span className={`w-2.5 h-2.5 rounded-full ${tag.color.replace('text-', 'bg-')}`} style={{ backgroundColor: `hsl(var(--accent-${tag.color.split('-').pop()}))` }} />
                     <span className="text-secondary-foreground">{tag.label}</span>
                   </span>
                 </TooltipTrigger>
@@ -282,7 +340,7 @@ export const ProfileCard = () => {
                     className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-secondary/40 text-[11px] font-medium role-tag-animate border border-border/50 hover:border-primary/50 hover:bg-primary/10 transition-colors cursor-default"
                     style={{ animationDelay: `${(index + decorativeTags.length) * 0.05}s` }}
                   >
-                    <div className={`w-2 h-2 rounded-sm ${skill.color}`} />
+                    <div className={`w-2 h-2 rounded-sm ${skill.color}`} style={ skill.color !== 'bg-foreground' ? { backgroundColor: `hsl(var(--accent-${skill.color.split('-').pop()}))` } : {} } />
                     <span className="text-secondary-foreground/90">{skill.name}</span>
                   </span>
                 </TooltipTrigger>

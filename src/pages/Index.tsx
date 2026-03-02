@@ -70,12 +70,12 @@ const Index = () => {
       className="min-h-screen bg-background"
     >
       <div className="max-w-7xl mx-auto px-2 md:px-4 py-4 md:py-8 flex">
-        {/* Desktop Server Sidebar */}
-        <div className="hidden lg:block shrink-0 mr-4">
+        {/* Server Sidebar - Shows as hamburger on mobile, sticky on desktop */}
+        <div className="shrink-0 lg:mr-4 z-50">
           <ServerSidebar activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
-        <div className="flex-1 flex flex-col lg:flex-row gap-4 md:gap-8 w-full max-w-full">
+        <div className="flex-1 flex flex-col lg:flex-row gap-4 md:gap-8 w-full max-w-full mt-12 lg:mt-0">
           {/* Left Column - Profile Card */}
           <div
             ref={leftColumnRef}
@@ -89,18 +89,6 @@ const Index = () => {
             ref={rightColumnRef}
             className="flex-1 min-w-0"
           >
-            {/* Mobile Tabs (Optional, or just hide on mobile too if not needed, but let's keep it simple for now and rely on sidebar logic, or we could conditionally render horizontal scroll tabs) */}
-            <div className="lg:hidden flex gap-2 mb-4 overflow-x-auto pb-2 custom-scrollbar">
-              {['board', 'activity', 'hobbies'].map(tab => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition-colors ${activeTab === tab ? 'bg-[#5865F2] text-white' : 'bg-[#2b2d31] text-[#b5bac1]'}`}
-                >
-                  {tab === 'board' ? 'Proyectos' : tab === 'activity' ? 'Stack' : 'Hobbies'}
-                </button>
-              ))}
-            </div>
 
             {/* Content based on active tab */}
             {activeTab === 'board' && (
