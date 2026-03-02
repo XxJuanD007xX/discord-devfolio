@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Discord-inspired Design System for Developer Portfolio */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -118,7 +119,7 @@
 
   /* Discord Card Style */
   .discord-card {
-    @apply rounded-xl border-none;
+    @apply rounded-xl border border-transparent;
     background: var(--bg-secondary, #2b2d31);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -126,6 +127,7 @@
 
   .discord-card:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    border-color: var(--border-palette, #3f4147);
   }
 
   /* Widget styling */
@@ -135,13 +137,14 @@
 
   .widget-header {
     @apply flex items-center gap-2 mb-4 text-sm font-semibold uppercase tracking-wide;
-    color: hsl(var(--muted-foreground));
+    color: var(--fg-muted, #949ba4);
   }
 
   /* Role/Skill Tags */
   .role-tag {
     @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200;
-    background: hsl(var(--secondary));
+    background: var(--bg-tertiary, #232428);
+    color: var(--fg-main, #dbdee1);
   }
 
   .role-tag:hover {
@@ -182,12 +185,13 @@
   /* Social Link */
   .social-link {
     @apply flex items-center gap-3 p-2.5 rounded-lg transition-all duration-200;
-    background: hsl(var(--secondary));
+    background: var(--bg-tertiary, #232428);
   }
 
   .social-link:hover {
-    background: hsl(var(--muted));
+    background: var(--bg-secondary, #2b2d31);
     transform: translateX(4px);
+    border-color: var(--border-palette, #3f4147);
   }
 
   /* Project Card */
@@ -202,23 +206,23 @@
   /* Stat Box */
   .stat-box {
     @apply text-center p-3 rounded-lg;
-    background: hsl(var(--secondary));
+    background: var(--bg-tertiary, #232428);
   }
 
   .stat-value {
     @apply text-2xl font-bold;
-    color: hsl(var(--foreground));
+    color: var(--fg-main, #dbdee1);
   }
 
   .stat-label {
     @apply text-xs uppercase tracking-wide mt-1;
-    color: hsl(var(--muted-foreground));
+    color: var(--fg-muted, #949ba4);
   }
 
   /* Timeline */
   .timeline-item {
     @apply relative pl-6 pb-6 border-l-2;
-    border-color: hsl(var(--border));
+    border-color: var(--border-palette, #3f4147);
   }
 
   .timeline-item:last-child {

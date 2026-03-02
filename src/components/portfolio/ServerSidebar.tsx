@@ -61,20 +61,21 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
                     >
                         <div className={`absolute left-0 w-1 bg-white rounded-r-full transition-all duration-300 top-1/2 -translate-y-1/2 ${isActive ? 'h-10' : isHovered ? 'h-5' : 'h-0 opacity-0'}`} />
 
-                        <div className={`flex items-center justify-center w-12 h-12 transition-all duration-300 overflow-hidden
+                        <div className={`flex items-center justify-center w-12 h-12 transition-all duration-300 overflow-hidden border border-transparent
                             ${isActive ? `rounded-2xl ${server.bgColor} text-white shadow-lg`
                                 : isHovered ? `rounded-2xl ${server.bgColor} text-white`
-                                    : 'rounded-[24px] bg-[#313338] text-[#dbdee1] hover:text-white'}`}
+                                    : 'rounded-[24px] text-[var(--fg-main,#dbdee1)] hover:text-white'}`}
+                            style={!isActive && !isHovered ? { backgroundColor: 'var(--bg-secondary, #2b2d31)' } : {}}
                         >
                             <Icon className="w-[22px] h-[22px]" />
                         </div>
 
                         {isHome && !isActive && (
-                            <div className="absolute bottom-0 right-3 w-4 h-4 rounded-full bg-[#f23f42] border-[3px] border-[#1e1f22] z-20" />
+                            <div className="absolute bottom-0 right-3 w-4 h-4 rounded-full bg-[#f23f42] border-[3px] z-20" style={{ borderColor: 'var(--bg-tertiary, #1e1f22)' }} />
                         )}
                     </div>
                 </TooltipTrigger>
-                <TooltipContent side="right" sideOffset={18} className="bg-[#111214] text-[#dbdee1] border-none shadow-xl text-sm font-bold leading-none py-2 px-3 animate-slide-right-fade">
+                <TooltipContent side="right" sideOffset={18} className="bg-[#111214] text-white border-none shadow-xl text-sm font-bold leading-none py-2 px-3 animate-slide-right-fade">
                     <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-[#111214] rotate-45" />
                     {server.label}
                 </TooltipContent>
@@ -84,18 +85,29 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
 
     return (
         <>
-            <button
-                className="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-full bg-[#2b2d31] text-white shadow-lg border border-white/10"
-                onClick={() => setIsMobileOpen(!isMobileOpen)}
-            >
-                {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {/* Mobile Header / Hamburger Button */}
+            <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-[var(--bg-main,#1e1f22)] border-b border-white/5 z-40 flex items-center px-4 shadow-md backdrop-blur-md bg-opacity-90">
+                <button
+                    className="p-2 -ml-2 rounded-md text-[var(--fg-main,#dbdee1)] hover:bg-[var(--bg-secondary,#2b2d31)] transition-colors"
+                    onClick={() => setIsMobileOpen(!isMobileOpen)}
+                >
+                    <Menu className="w-6 h-6" />
+                </button>
+                <span className="ml-2 font-bold text-[var(--fg-main,#dbdee1)]">Menú de Navegación</span>
+            </div>
 
             <div
-                className={`fixed lg:sticky top-4 lg:top-8 max-h-[calc(100vh-2rem)] bg-[#1e1f22] rounded-[24px] flex flex-col items-center py-3 gap-2 shadow-2xl z-40 border border-white/5 transition-transform duration-300 ease-in-out w-[72px]
-                    ${isMobileOpen ? 'translate-x-0' : '-translate-x-[150%] lg:translate-x-0'}
+                className={`fixed lg:sticky top-0 lg:top-8 h-full lg:h-auto max-h-[100vh] lg:max-h-[calc(100vh-2rem)] bg-[var(--bg-tertiary,#1e1f22)] lg:rounded-[24px] flex flex-col items-center py-4 lg:py-3 gap-2 shadow-2xl z-50 border-r lg:border border-white/5 transition-transform duration-300 ease-in-out w-[80px] lg:w-[72px] left-0
+                    ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
                 `}
             >
+                {/* Mobile Close Button inside sidebar */}
+                <button
+                    className="lg:hidden absolute -right-12 top-4 p-2 rounded-full bg-[var(--bg-secondary,#2b2d31)] text-white shadow-lg"
+                    onClick={() => setIsMobileOpen(false)}
+                >
+                    <X className="w-5 h-5" />
+                </button>
                 {/* Home */}
                 {renderServerIcon(primaryGroup[0], true)}
 

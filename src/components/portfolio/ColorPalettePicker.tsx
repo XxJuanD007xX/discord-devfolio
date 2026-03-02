@@ -236,7 +236,13 @@ export const ColorPalettePicker = () => {
       const palette = palettes.find(p => p.id === savedPalette);
       if (palette) {
         applyPalette(palette);
+        return;
       }
+    }
+    // Si no hay guardada, aplicar la por defecto
+    const defaultPalette = palettes.find(p => p.id === 'magenta');
+    if (defaultPalette) {
+      applyPalette(defaultPalette);
     }
   }, []);
 
