@@ -16,7 +16,10 @@ export const ActivityTabs = ({ activeTab, onTabChange }: ActivityTabsProps) => {
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   return (
-    <div className="flex gap-2 mb-6 p-1.5 bg-[#1e1f22]/80 rounded-xl backdrop-blur-md border border-white/5 shadow-lg shadow-black/20">
+    <div
+      className="flex gap-2 mb-6 p-1.5 rounded-xl backdrop-blur-md border border-white/5 shadow-lg shadow-black/20"
+      style={{ background: 'color-mix(in srgb, var(--bg-main, #1e1f22) 80%, transparent)' }}
+    >
       {tabs.map((tab, index) => {
         const Icon = tab.icon;
         const isActive = activeTab === tab.id;
@@ -32,34 +35,44 @@ export const ActivityTabs = ({ activeTab, onTabChange }: ActivityTabsProps) => {
               relative flex items-center gap-2.5 px-5 py-3 text-sm font-bold 
               transition-all duration-300 rounded-lg group ripple-effect
               ${isActive
-                ? 'bg-gradient-to-r from-[#5865F2] to-[#7289DA] text-white shadow-xl shadow-[#5865F2]/40'
-                : 'text-[#949ba4] hover:text-white hover:bg-[#35373c]/90'
+                ? 'text-white shadow-xl'
+                : 'hover:bg-[#35373c]/90'
               }
             `}
             style={{
               animationDelay: `${index * 0.1}s`,
-              transform: isActive ? 'scale(1.02)' : 'scale(1)'
+              transform: isActive ? 'scale(1.02)' : 'scale(1)',
+              color: isActive ? 'white' : 'var(--fg-muted, #949ba4)',
+              ...(isActive ? {
+                background: `linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.7))`,
+                boxShadow: `0 10px 15px -3px hsl(var(--primary) / 0.4)`,
+              } : {}),
             }}
           >
             {/* Fondo con gradiente animado para tab activo */}
             {isActive && (
               <>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#5865F2] via-[#eb459e] to-[#5865F2] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ backgroundSize: '200% 100%', animation: 'shimmer 3s linear infinite' }} />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#5865F2] to-[#7289DA] rounded-lg" />
+                <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `linear-gradient(to right, var(--gradient-start, #5865F2), var(--gradient-end, #eb459e), var(--gradient-start, #5865F2))`,
+                    backgroundSize: '200% 100%',
+                    animation: 'shimmer 3s linear infinite',
+                  }} />
+                <div className="absolute inset-0 rounded-lg"
+                  style={{ background: `linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.7))` }} />
               </>
             )}
 
             {/* Glow effect pulsante para tab activo */}
             {isActive && (
               <div className="absolute inset-0 rounded-lg animate-intense-glow"
-                style={{ color: '#5865F2' }} />
+                style={{ color: 'hsl(var(--primary))' }} />
             )}
 
             {/* Sparkle decorativo */}
             {isActive && (
               <div className="absolute -top-1 -right-1 animate-float-gentle">
-                <Sparkles className="w-3 h-3 text-[#f0b232]" />
+                <Sparkles className="w-3 h-3" style={{ color: 'hsl(var(--accent-yellow))' }} />
               </div>
             )}
 
@@ -90,7 +103,10 @@ export const ActivityTabs = ({ activeTab, onTabChange }: ActivityTabsProps) => {
 
             {/* Badge de notificación decorativo en el primer tab */}
             {tab.id === 'board' && (
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-[#f23f42] rounded-full animate-pulse shadow-lg shadow-[#f23f42]/50 z-20" />
+              <span
+                className="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-pulse shadow-lg z-20"
+                style={{ background: 'hsl(var(--accent-red))', boxShadow: '0 4px 12px hsl(var(--accent-red) / 0.5)' }}
+              />
             )}
 
             {/* Active indicator - línea inferior brillante */}
@@ -101,18 +117,25 @@ export const ActivityTabs = ({ activeTab, onTabChange }: ActivityTabsProps) => {
             {/* Hover sparkle effect para tabs inactivos */}
             {!isActive && (
               <>
-                <span className="absolute top-1 right-1 w-1 h-1 bg-[#5865F2] rounded-full opacity-0 group-hover:opacity-100 transition-opacity animate-ping" />
-                <span className="absolute bottom-1 left-1 w-1 h-1 bg-[#eb459e] rounded-full opacity-0 group-hover:opacity-100 transition-opacity animate-ping"
-                  style={{ animationDelay: '0.5s' }} />
+                <span className="absolute top-1 right-1 w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity animate-ping"
+                  style={{ background: 'hsl(var(--primary))' }} />
+                <span className="absolute bottom-1 left-1 w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity animate-ping"
+                  style={{ animationDelay: '0.5s', background: 'hsl(var(--accent-pink))' }} />
               </>
             )}
 
             {/* Tooltip con descripción */}
             {isHovered && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-1.5 bg-[#18191c] text-white text-xs rounded-lg whitespace-nowrap animate-slide-up-fade shadow-xl border border-white/10 z-50"
-                style={{ animationDuration: '0.2s' }}
+              <div
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-1.5 text-xs rounded-lg whitespace-nowrap animate-slide-up-fade shadow-xl border border-white/10 z-50"
+                style={{
+                  animationDuration: '0.2s',
+                  background: 'var(--bg-main, #18191c)',
+                  color: 'var(--fg-main, #dbdee1)',
+                }}
               >
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#18191c] rotate-45 border-l border-t border-white/10" />
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-l border-t border-white/10"
+                  style={{ background: 'var(--bg-main, #18191c)' }} />
                 <span className="mr-1">{tab.emoji}</span>
                 {tab.description}
               </div>

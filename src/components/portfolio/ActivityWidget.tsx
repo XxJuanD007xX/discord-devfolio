@@ -9,7 +9,7 @@ const workflow = [
   {
     category: 'Entorno de Desarrollo',
     emoji: '🛠️',
-    accentColor: '#5865F2',
+    accentColor: 'hsl(var(--accent-blue))',
     items: [
       { name: 'Antigravity', icon: BrandIcons.Antigravity, desc: 'Editor de Código', color: '#3B82F6', badge: '★ Principal' },
       { name: 'VS Code', icon: BrandIcons.VSCode, desc: 'Editor Alternativo', color: '#007ACC', badge: '⚡ Diario' },
@@ -21,7 +21,7 @@ const workflow = [
   {
     category: 'Inteligencia Artificial',
     emoji: '🤖',
-    accentColor: '#eb459e',
+    accentColor: 'hsl(var(--accent-pink))',
     items: [
       { name: 'Gemini', icon: BrandIcons.Gemini, desc: 'Asistente Principal', color: '#4E88D4', badge: '★ Principal' },
       { name: 'Claude', icon: BrandIcons.Claude, desc: 'Consultas Complejas', color: '#D97757', badge: '🧠 Avanzado' },
@@ -33,7 +33,7 @@ const workflow = [
   {
     category: 'Frontend Stack',
     emoji: '🎨',
-    accentColor: '#3ba55d',
+    accentColor: 'hsl(var(--accent-green))',
     items: [
       { name: 'Next.js', icon: BrandIcons.NextJS, desc: 'Framework', color: '#ffffff', badge: '★ Principal' },
       { name: 'Shadcn/ui', icon: BrandIcons.Shadcn, desc: 'Componentes', color: '#a78bfa', badge: '📦 Librería' },
@@ -46,7 +46,7 @@ const workflow = [
   {
     category: 'Backend & Servicios',
     emoji: '⚙️',
-    accentColor: '#f0b232',
+    accentColor: 'hsl(var(--accent-yellow))',
     items: [
       { name: 'Appwrite', icon: BrandIcons.Appwrite, desc: 'Backend as a Service', color: '#F02E65', badge: '★ Principal' },
       { name: 'Firebase', icon: BrandIcons.Firebase, desc: 'Backend as a Service', color: '#FFCA28', badge: '🔥 BaaS' },
@@ -61,7 +61,7 @@ const workflow = [
   {
     category: 'Planificación & Diseño',
     emoji: '📐',
-    accentColor: '#00c2a8',
+    accentColor: 'hsl(var(--accent-cyan))',
     items: [
       { name: 'Figma', icon: BrandIcons.Figma, desc: 'Diseño UI/UX', color: '#F24E1E', badge: '★ Principal' },
       { name: 'Excalidraw', icon: BrandIcons.Excalidraw, desc: 'Diagramas Rápidos', color: '#6965DB', badge: '✏️ Sketch' },
@@ -83,22 +83,28 @@ export const ActivityWidget = () => {
   return (
     <div className="space-y-4">
       {/* Header Widget */}
-      <div className="widget widget-animate bg-[#2b2d31] border-none shadow-xl">
+      <div className="widget widget-animate border-none shadow-xl" style={{ background: 'var(--bg-secondary, #2b2d31)' }}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-[#5865F2] to-[#eb459e] shadow-lg shadow-[#5865F2]/20">
+            <div
+              className="p-2 rounded-xl shadow-lg"
+              style={{ background: `linear-gradient(to bottom right, var(--gradient-start, #5865F2), var(--gradient-end, #eb459e))`, boxShadow: `0 4px 12px hsl(var(--primary) / 0.2)` }}
+            >
               <Workflow className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h2 className="font-bold text-lg text-white flex items-center gap-1.5">
+              <h2 className="font-bold text-lg flex items-center gap-1.5" style={{ color: 'var(--fg-main, #dbdee1)' }}>
                 Mi Workflow
-                <Sparkles className="w-4 h-4 text-[#f0b232] animate-float-gentle" />
+                <Sparkles className="w-4 h-4 animate-float-gentle" style={{ color: 'hsl(var(--accent-yellow))' }} />
               </h2>
-              <p className="text-[11px] text-[#949ba4]">Herramientas y servicios que uso a diario</p>
+              <p className="text-[11px]" style={{ color: 'var(--fg-muted, #949ba4)' }}>Herramientas y servicios que uso a diario</p>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1e1f22] text-[10px] font-bold text-[#23a559]">
-            <div className="w-2 h-2 rounded-full bg-[#23a559] animate-pulse" />
+          <div
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold"
+            style={{ background: 'var(--bg-main, #1e1f22)', color: 'hsl(var(--accent-green))' }}
+          >
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'hsl(var(--accent-green))' }} />
             {workflow.reduce((a, s) => a + s.items.length, 0)} activas
           </div>
         </div>
@@ -106,13 +112,13 @@ export const ActivityWidget = () => {
 
       {/* Category Sections */}
       {workflow.map((section, sIdx) => (
-        <div key={sIdx} className="widget widget-animate bg-[#2b2d31] border-none shadow-xl">
+        <div key={sIdx} className="widget widget-animate border-none shadow-xl" style={{ background: 'var(--bg-secondary, #2b2d31)' }}>
           {/* Category Header */}
           <div className="flex items-center gap-2 mb-4">
             <span className="text-base">{section.emoji}</span>
-            <h3 className="text-xs font-bold text-[#b5bac1] uppercase tracking-wider">{section.category}</h3>
-            <div className="flex-1 h-px bg-[#3f4147]/50" />
-            <span className="text-[10px] text-[#949ba4] font-medium">{section.items.length} herramientas</span>
+            <h3 className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--fg-muted, #b5bac1)' }}>{section.category}</h3>
+            <div className="flex-1 h-px" style={{ background: 'var(--border-palette, #3f4147)', opacity: 0.5 }} />
+            <span className="text-[10px] font-medium" style={{ color: 'var(--fg-muted, #949ba4)' }}>{section.items.length} herramientas</span>
           </div>
 
           {/* Items Grid */}
@@ -127,7 +133,8 @@ export const ActivityWidget = () => {
               return (
                 <div
                   key={iIdx}
-                  className={`${colSpan} relative bg-[#1e1f22] p-4 rounded-xl border border-transparent hover:border-white/10 transition-all duration-300 group overflow-hidden flex flex-col`}
+                  className={`${colSpan} relative p-4 rounded-xl border border-transparent hover:border-white/10 transition-all duration-300 group overflow-hidden flex flex-col`}
+                  style={{ background: 'var(--bg-main, #1e1f22)' }}
                 >
                   {/* Background glow on hover */}
                   <div
@@ -138,8 +145,8 @@ export const ActivityWidget = () => {
                   {/* Icon + Status */}
                   <div className="flex items-center justify-between mb-3 relative z-10">
                     <div
-                      className="p-2.5 rounded-xl bg-[#2b2d31] transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                      style={{ color: item.color }}
+                      className="p-2.5 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                      style={{ background: 'var(--bg-secondary, #2b2d31)', color: item.color }}
                     >
                       <item.icon className="w-6 h-6" />
                     </div>
@@ -152,12 +159,12 @@ export const ActivityWidget = () => {
                   </div>
 
                   {/* Name */}
-                  <div className="text-sm font-bold text-white mb-0.5 relative z-10 group-hover:text-white transition-colors">
+                  <div className="text-sm font-bold mb-0.5 relative z-10 transition-colors" style={{ color: 'var(--fg-main, #dbdee1)' }}>
                     {item.name}
                   </div>
 
                   {/* Description */}
-                  <div className="text-[11px] text-[#949ba4] relative z-10">{item.desc}</div>
+                  <div className="text-[11px] relative z-10" style={{ color: 'var(--fg-muted, #949ba4)' }}>{item.desc}</div>
 
                   {/* Badge */}
                   <div
@@ -187,14 +194,14 @@ export const ActivityWidget = () => {
       ))}
 
       {/* Footer */}
-      <div className="widget widget-animate bg-[#2b2d31] border-none shadow-xl">
-        <div className="flex items-center justify-between text-[11px] text-[#949ba4]">
+      <div className="widget widget-animate border-none shadow-xl" style={{ background: 'var(--bg-secondary, #2b2d31)' }}>
+        <div className="flex items-center justify-between text-[11px]" style={{ color: 'var(--fg-muted, #949ba4)' }}>
           <div className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5" />
             <span>Pipeline activa · Última actualización hoy</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[#23a559] font-bold">
-            <div className="w-2 h-2 rounded-full bg-[#23a559] animate-pulse" />
+          <div className="flex items-center gap-1.5 font-bold" style={{ color: 'hsl(var(--accent-green))' }}>
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'hsl(var(--accent-green))' }} />
             Todo operativo
           </div>
         </div>

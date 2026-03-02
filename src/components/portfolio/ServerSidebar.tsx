@@ -1,5 +1,5 @@
-import { LayoutGrid, Activity, Gamepad2, Compass, Download, MessageSquare, Briefcase, GraduationCap, X, Menu } from 'lucide-react';
-import { useState } from 'react';
+import { LayoutGrid, Activity, Gamepad2, Compass, Download, MessageSquare, Briefcase, GraduationCap, X, Menu, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useSound } from '@/hooks/useSound';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -27,10 +27,20 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const { playClick, playHover } = useSound();
 
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isMobileOpen]);
+
     const handleTabClick = (id: string, anchor?: string) => {
         playClick();
         onTabChange(id);
-        if (isMobileOpen) setIsMobileOpen(false);
+        setIsMobileOpen(false);
 
         if (anchor) {
             setTimeout(() => {
@@ -38,14 +48,15 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth' });
                 }
-            }, 100);
+            }, 150);
         } else {
             // Al cambiar de pestaña principal, scroll al tope
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
-    const renderServerIcon = (server: any, isHome: boolean = false) => {
+    // ============ DESKTOP: icon-only sidebar with tooltips ============
+    const renderDesktopIcon = (server: typeof primaryGroup[0], isHome: boolean = false) => {
         const Icon = server.icon;
         const isActive = (isHome && activeTab === 'board') || (!isHome && activeTab === server.id && !server.anchor);
         const isHovered = hoveredTab === server.label;
@@ -83,44 +94,177 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
         );
     };
 
+    // ============ MOBILE: labeled row items ============
+    const renderMobileItem = (server: typeof primaryGroup[0], isHome: boolean = false) => {
+        const Icon = server.icon;
+        const isActive = (isHome && activeTab === 'board') || (!isHome && activeTab === server.id && !server.anchor);
+
+        return (
+            <button
+                key={server.label}
+                className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-xl transition-all duration-200 group text-left ${isActive ? 'shadow-lg' : 'hover:opacity-90'}`}
+                style={{
+                    background: isActive
+                        ? 'hsl(var(--primary) / 0.15)'
+                        : 'transparent',
+                    borderLeft: isActive ? '3px solid hsl(var(--primary))' : '3px solid transparent',
+                }}
+                onClick={() => handleTabClick(server.id, server.anchor)}
+            >
+                <div
+                    className={`flex items-center justify-center w-10 h-10 rounded-xl shrink-0 transition-all duration-300 ${isActive ? `${server.bgColor} text-white shadow-md` : ''}`}
+                    style={!isActive ? { backgroundColor: 'var(--bg-main, #1e1f22)', color: 'var(--fg-muted, #949ba4)' } : {}}
+                >
+                    <Icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                    <span
+                        className="text-sm font-semibold block truncate"
+                        style={{ color: isActive ? 'var(--fg-main, #dbdee1)' : 'var(--fg-muted, #949ba4)' }}
+                    >
+                        {server.label}
+                    </span>
+                </div>
+                {server.anchor && (
+                    <ChevronRight className="w-4 h-4 shrink-0 opacity-30" style={{ color: 'var(--fg-muted, #949ba4)' }} />
+                )}
+            </button>
+        );
+    };
+
     return (
         <>
-            {/* Mobile Header / Hamburger Button */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-[var(--bg-main,#1e1f22)] border-b border-white/5 z-40 flex items-center px-4 shadow-md backdrop-blur-md bg-opacity-90">
-                <button
-                    className="p-2 -ml-2 rounded-md text-[var(--fg-main,#dbdee1)] hover:bg-[var(--bg-secondary,#2b2d31)] transition-colors"
-                    onClick={() => setIsMobileOpen(!isMobileOpen)}
-                >
-                    <Menu className="w-6 h-6" />
-                </button>
-                <span className="ml-2 font-bold text-[var(--fg-main,#dbdee1)]">Menú de Navegación</span>
+            {/* ===================== MOBILE HAMBURGER BUTTON ===================== */}
+            <button
+                className={`lg:hidden fixed top-4 left-4 z-[60] p-2.5 rounded-xl shadow-lg border border-white/10 transition-all duration-300 hover:scale-105 active:scale-95 group ${isMobileOpen ? 'hidden' : ''}`}
+                style={{
+                    background: 'var(--bg-secondary, #2b2d31)',
+                }}
+                onClick={() => { setIsMobileOpen(true); playClick(); }}
+                aria-label="Abrir menú de navegación"
+            >
+                <Menu className="w-5 h-5 transition-colors" style={{ color: 'var(--fg-main, #dbdee1)' }} />
+                {/* Notification dot */}
+                <span
+                    className="absolute -top-1 -right-1 w-3 h-3 rounded-full animate-pulse border-2"
+                    style={{ background: '#f23f42', borderColor: 'var(--bg-secondary, #2b2d31)' }}
+                />
+            </button>
+
+            {/* ===================== MOBILE BACKDROP ===================== */}
+            <div
+                className={`lg:hidden fixed inset-0 z-[55] transition-all duration-300 ${isMobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
+                onClick={() => setIsMobileOpen(false)}
+                data-lenis-prevent
+            />
+
+            {/* ===================== MOBILE SIDEBAR DRAWER ===================== */}
+            <div
+                className={`lg:hidden fixed top-0 left-0 z-[56] h-full w-[280px] flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] border-r border-white/5 shadow-2xl ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
+                style={{ background: 'var(--bg-tertiary, #1e1f22)' }}
+                data-lenis-prevent
+            >
+                {/* Mobile Sidebar Header */}
+                <div className="flex items-center justify-between px-4 py-4 shrink-0 border-b border-white/5">
+                    <div className="flex items-center gap-2.5">
+                        <div
+                            className="w-8 h-8 rounded-lg flex items-center justify-center"
+                            style={{ background: 'hsl(var(--primary))' }}
+                        >
+                            <Compass className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                            <h2 className="text-sm font-bold" style={{ color: 'var(--fg-main, #dbdee1)' }}>
+                                Navegación
+                            </h2>
+                            <p className="text-[10px]" style={{ color: 'var(--fg-muted, #949ba4)' }}>
+                                Portfolio de Juan Diego
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        className="p-2 rounded-lg transition-colors hover:bg-white/10"
+                        style={{ color: 'var(--fg-muted, #949ba4)' }}
+                        onClick={() => setIsMobileOpen(false)}
+                        aria-label="Cerrar menú"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
+
+                {/* Mobile Nav Items */}
+                <div className="flex-1 overflow-y-auto custom-scrollbar py-3 px-3 space-y-1">
+                    {/* Section: Principal */}
+                    <div className="px-2 mb-2">
+                        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--fg-muted, #949ba4)' }}>
+                            Principal
+                        </span>
+                    </div>
+                    {renderMobileItem(primaryGroup[0], true)}
+                    {primaryGroup.slice(1).map(server => renderMobileItem(server))}
+
+                    {/* Divider */}
+                    <div className="h-px mx-2 my-3" style={{ background: 'var(--border-palette, #3f4147)' }} />
+
+                    {/* Section: Secciones */}
+                    <div className="px-2 mb-2">
+                        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--fg-muted, #949ba4)' }}>
+                            Secciones
+                        </span>
+                    </div>
+                    {secondaryGroup.map(server => renderMobileItem(server))}
+
+                    {/* Divider */}
+                    <div className="h-px mx-2 my-3" style={{ background: 'var(--border-palette, #3f4147)' }} />
+
+                    {/* Download CV */}
+                    <button
+                        className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl transition-all duration-200 group text-left"
+                        style={{ borderLeft: '3px solid transparent' }}
+                        onClick={() => { playClick(); setIsMobileOpen(false); }}
+                    >
+                        <div
+                            className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0 border border-dashed transition-all duration-300"
+                            style={{ borderColor: 'hsl(var(--accent-green))', color: 'hsl(var(--accent-green))' }}
+                        >
+                            <Download className="w-5 h-5" />
+                        </div>
+                        <span className="text-sm font-semibold" style={{ color: 'hsl(var(--accent-green))' }}>
+                            Descargar CV
+                        </span>
+                    </button>
+                </div>
+
+                {/* Mobile Sidebar Footer - mini branding */}
+                <div className="shrink-0 px-4 py-3 border-t border-white/5">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'hsl(var(--accent-green))' }} />
+                        <span className="text-[11px] font-medium" style={{ color: 'var(--fg-muted, #949ba4)' }}>
+                            Online · Disponible
+                        </span>
+                    </div>
+                </div>
             </div>
 
+            {/* ===================== DESKTOP SIDEBAR ===================== */}
             <div
-                className={`fixed lg:sticky top-0 lg:top-8 h-full lg:h-auto max-h-[100vh] lg:max-h-[calc(100vh-2rem)] bg-[var(--bg-tertiary,#1e1f22)] lg:rounded-[24px] flex flex-col items-center py-4 lg:py-3 gap-2 shadow-2xl z-50 border-r lg:border border-white/5 transition-transform duration-300 ease-in-out w-[80px] lg:w-[72px] left-0
-                    ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-                `}
+                className="hidden lg:flex sticky top-8 h-auto max-h-[calc(100vh-2rem)] rounded-[24px] flex-col items-center py-3 gap-2 shadow-2xl z-50 border border-white/5 w-[72px]"
+                style={{ background: 'var(--bg-tertiary, #1e1f22)' }}
             >
-                {/* Mobile Close Button inside sidebar */}
-                <button
-                    className="lg:hidden absolute -right-12 top-4 p-2 rounded-full bg-[var(--bg-secondary,#2b2d31)] text-white shadow-lg"
-                    onClick={() => setIsMobileOpen(false)}
-                >
-                    <X className="w-5 h-5" />
-                </button>
                 {/* Home */}
-                {renderServerIcon(primaryGroup[0], true)}
+                {renderDesktopIcon(primaryGroup[0], true)}
 
-                <div className="w-8 h-0.5 bg-[#2b2d31] rounded-full mx-auto my-1" />
+                <div className="w-8 h-0.5 rounded-full mx-auto my-1" style={{ background: 'var(--bg-secondary, #2b2d31)' }} />
 
                 <div className="flex-1 w-full overflow-y-auto overflow-x-hidden custom-scrollbar-widget flex flex-col items-center gap-1.5 pt-1">
                     {/* Main Navigation (Scrolls) */}
-                    {primaryGroup.slice(1).map(server => renderServerIcon(server))}
+                    {primaryGroup.slice(1).map(server => renderDesktopIcon(server))}
 
-                    <div className="w-8 h-0.5 bg-[#2b2d31] rounded-full mx-auto my-2" />
+                    <div className="w-8 h-0.5 rounded-full mx-auto my-2" style={{ background: 'var(--bg-secondary, #2b2d31)' }} />
 
                     {/* Secondary Groups (Tabs) */}
-                    {secondaryGroup.map(server => renderServerIcon(server))}
+                    {secondaryGroup.map(server => renderDesktopIcon(server))}
 
                     {/* DL CV Button */}
                     <Tooltip delayDuration={50}>
@@ -146,13 +290,6 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
                     </Tooltip>
                 </div>
             </div>
-
-            {isMobileOpen && (
-                <div
-                    className="lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm"
-                    onClick={() => setIsMobileOpen(false)}
-                />
-            )}
         </>
     );
 };

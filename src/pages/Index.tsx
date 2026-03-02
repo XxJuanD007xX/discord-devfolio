@@ -31,10 +31,16 @@ const Index = () => {
     if (!rightColumn || !leftColumn || !container) return;
 
     const handleScroll = () => {
+      // Solo aplicar parallax en desktop (lg: 1024px+)
+      if (window.innerWidth < 1024) {
+        leftColumn.style.transform = 'translateY(0)';
+        return;
+      }
+
       const scrollTop = window.scrollY;
       const leftHeight = leftColumn.offsetHeight;
       const windowHeight = window.innerHeight;
-      const maxSticky = leftHeight - windowHeight + 64; // 64px = padding
+      const maxSticky = leftHeight - windowHeight + 64;
 
       if (scrollTop <= 0) {
         leftColumn.style.transform = 'translateY(0)';
@@ -44,7 +50,11 @@ const Index = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   // Animate progress bars on load
@@ -75,7 +85,7 @@ const Index = () => {
           <ServerSidebar activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
-        <div className="flex-1 flex flex-col lg:flex-row gap-4 md:gap-8 w-full max-w-full mt-12 lg:mt-0">
+        <div className="flex-1 flex flex-col lg:flex-row gap-2 lg:gap-8 w-full max-w-full">
           {/* Left Column - Profile Card */}
           <div
             ref={leftColumnRef}

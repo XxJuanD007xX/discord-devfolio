@@ -97,11 +97,11 @@ export const ProfileCard = () => {
 
   return (
     <div className="profile-card discord-card overflow-hidden relative group">
-      {/* Cyber City Decoration Background - Mejorado con animación breathe */}
+      {/* Cyber City Decoration Background - Solo en desktop */}
       <div
         className="absolute bottom-0 left-0 w-full opacity-60 pointer-events-none z-0 transition-all duration-700 group-hover:opacity-80 animate-breathe"
         style={{
-          height: 'calc(100% - 140px)', /* Ajustado para nuevo banner más bajo */
+          height: 'calc(100% - 140px)',
           backgroundImage: `url(${cityImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'bottom center',
@@ -145,7 +145,7 @@ export const ProfileCard = () => {
             className="relative z-10 p-1.5 bg-[var(--bg-secondary,#2b2d31)] rounded-full cursor-pointer"
             onClick={handleAvatarClick}
             style={{
-              transform: clickCount > 10 ? `scale(${Math.min(1 + (clickCount-10)*0.02, 1.3)}) rotate(${clickCount * 5}deg)` : 'none',
+              transform: clickCount > 10 ? `scale(${Math.min(1 + (clickCount - 10) * 0.02, 1.3)}) rotate(${clickCount * 5}deg)` : 'none',
               transition: 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
             }}
           >
@@ -158,10 +158,10 @@ export const ProfileCard = () => {
 
             {/* Easter egg message */}
             {clickCount >= 10 && (
-               <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-[var(--primary)] text-white text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap animate-slide-up-fade pointer-events-none z-50">
-                 ¡Nivel Secreto Desbloqueado! 🦆
-                 <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--primary)] rotate-45" />
-               </div>
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-[var(--primary)] text-white text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap animate-slide-up-fade pointer-events-none z-50">
+                ¡Nivel Secreto Desbloqueado! 🦆
+                <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--primary)] rotate-45" />
+              </div>
             )}
 
             {/* Particles */}
@@ -222,7 +222,7 @@ export const ProfileCard = () => {
       </div>
 
       {/* Profile Info */}
-      <div className="p-4 pt-2 pb-32 relative z-10">
+      <div className="p-4 pt-2 pb-4 lg:pb-32 relative z-10">
         {/* Name and Username */}
         <div className="mb-2">
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -340,7 +340,7 @@ export const ProfileCard = () => {
                     className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-secondary/40 text-[11px] font-medium role-tag-animate border border-border/50 hover:border-primary/50 hover:bg-primary/10 transition-colors cursor-default"
                     style={{ animationDelay: `${(index + decorativeTags.length) * 0.05}s` }}
                   >
-                    <div className={`w-2 h-2 rounded-sm ${skill.color}`} style={ skill.color !== 'bg-foreground' ? { backgroundColor: `hsl(var(--accent-${skill.color.split('-').pop()}))` } : {} } />
+                    <div className={`w-2 h-2 rounded-sm ${skill.color}`} style={skill.color !== 'bg-foreground' ? { backgroundColor: `hsl(var(--accent-${skill.color.split('-').pop()}))` } : {}} />
                     <span className="text-secondary-foreground/90">{skill.name}</span>
                   </span>
                 </TooltipTrigger>

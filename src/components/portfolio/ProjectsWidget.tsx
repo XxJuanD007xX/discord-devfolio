@@ -131,13 +131,14 @@ const ProjectReactions = ({ projectId }: { projectId: string }) => {
           key={index}
           onClick={() => toggleReaction(index)}
           onMouseEnter={playHover}
-          className={`relative flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-semibold transition-all duration-200 border cursor-pointer outline-none hover:scale-105 active:scale-95 overflow-hidden ${react.reacted
-            ? 'bg-[#5865F2]/20 border-[#5865F2] text-[#5865F2]'
-            : 'bg-[#2b2d31] border-transparent text-[#b5bac1] hover:bg-[#313338] hover:text-[#dbdee1]'
-            }`}
+          className={`relative flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-semibold transition-all duration-200 border cursor-pointer outline-none hover:scale-105 active:scale-95 overflow-hidden`}
+          style={react.reacted
+            ? { background: 'hsl(var(--primary) / 0.2)', borderColor: 'hsl(var(--primary))', color: 'hsl(var(--primary))' }
+            : { background: 'var(--bg-secondary, #2b2d31)', borderColor: 'transparent', color: 'var(--fg-muted, #b5bac1)' }
+          }
         >
           {react.reacted && (
-            <div className="absolute inset-0 bg-[#5865F2]/20 animate-pulse-glow opacity-50 pointer-events-none" />
+            <div className="absolute inset-0 animate-pulse-glow opacity-50 pointer-events-none" style={{ background: 'hsl(var(--primary) / 0.2)' }} />
           )}
           <span className={`text-[13px] relative z-10 transition-transform ${react.reacted ? 'scale-125 drop-shadow-lg' : 'hover:-translate-y-0.5'}`}>
             {react.emoji}
@@ -146,7 +147,8 @@ const ProjectReactions = ({ projectId }: { projectId: string }) => {
         </button>
       ))}
       <button
-        className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#2b2d31] text-[#b5bac1] hover:bg-[#313338] hover:text-[#dbdee1] transition-colors focus:ring-2 ring-[#5865F2] outline-none hover:rotate-12 active:scale-90"
+        className="flex items-center justify-center w-7 h-7 rounded-lg transition-colors focus:ring-2 ring-primary outline-none hover:rotate-12 active:scale-90"
+        style={{ background: 'var(--bg-secondary, #2b2d31)', color: 'var(--fg-muted, #b5bac1)' }}
         onMouseEnter={playHover}
         onClick={playClick}
         title="Show all reactions"

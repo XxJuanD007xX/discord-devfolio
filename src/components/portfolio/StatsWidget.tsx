@@ -9,7 +9,7 @@ const stats = [
     label: 'Proyectos',
     sublabel: 'Desarrollados',
     color: 'text-accent-cyan',
-    bgGlow: '#00c2a8',
+    bgGlow: 'hsl(var(--accent-cyan))',
     progress: 85,
     rank: 1,
     trend: '+12/año',
@@ -21,7 +21,7 @@ const stats = [
     label: 'Commits',
     sublabel: 'GitHub Total',
     color: 'text-accent-green',
-    bgGlow: '#3ba55d',
+    bgGlow: 'hsl(var(--accent-green))',
     progress: 92,
     rank: 2,
     trend: '+34/año',
@@ -33,7 +33,7 @@ const stats = [
     label: 'Clientes',
     sublabel: 'Satisfechos',
     color: 'text-accent-yellow',
-    bgGlow: '#f0b232',
+    bgGlow: 'hsl(var(--accent-yellow))',
     progress: 75,
     rank: 3,
     trend: '+5/año',
@@ -81,8 +81,14 @@ const StatCard = ({ stat, index }: { stat: typeof stats[0]; index: number }) => 
 
   return (
     <div
-      className="relative bg-[#1e1f22] p-4 rounded-xl border border-transparent hover:border-[#5865f2]/30 transition-all duration-300 group overflow-hidden"
-      style={{ animationDelay: `${index * 0.1}s` }}
+      className="relative p-4 rounded-xl border border-transparent transition-all duration-300 group overflow-hidden"
+      style={{
+        animationDelay: `${index * 0.1}s`,
+        background: 'var(--bg-main, #1e1f22)',
+        borderColor: 'transparent',
+      }}
+      onMouseEnter={(e) => e.currentTarget.style.borderColor = 'hsl(var(--primary) / 0.3)'}
+      onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
     >
       {/* Background glow on hover */}
       <div
@@ -93,31 +99,40 @@ const StatCard = ({ stat, index }: { stat: typeof stats[0]; index: number }) => 
       {/* Header: Icon + Rank */}
       <div className="flex items-center justify-between mb-3 relative z-10">
         <div className="flex items-center gap-2">
-          <div className={`p-1.5 rounded-lg bg-[#2b2d31] ${stat.color} group-hover:scale-110 transition-transform duration-300`}>
+          <div
+            className={`p-1.5 rounded-lg ${stat.color} group-hover:scale-110 transition-transform duration-300`}
+            style={{ background: 'var(--bg-secondary, #2b2d31)' }}
+          >
             <stat.icon className="w-4 h-4" />
           </div>
           <span className="text-lg" title={`Ranking #${stat.rank}`}>
             {rankEmojis[stat.rank - 1]}
           </span>
         </div>
-        <div className="flex items-center gap-1 text-[10px] font-bold text-[#23a559] bg-[#23a559]/10 px-1.5 py-0.5 rounded-full">
+        <div
+          className="flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+          style={{ color: 'hsl(var(--accent-green))', background: 'hsl(var(--accent-green) / 0.1)' }}
+        >
           <TrendingUp className="w-2.5 h-2.5" />
           <span className="hidden sm:inline">{stat.trend}</span>
         </div>
       </div>
 
       {/* Value */}
-      <div className="text-2xl sm:text-3xl font-black text-white mb-0.5 tracking-tight relative z-10 tabular-nums">
+      <div
+        className="text-2xl sm:text-3xl font-black mb-0.5 tracking-tight relative z-10 tabular-nums"
+        style={{ color: 'var(--fg-main, #dbdee1)' }}
+      >
         {formatValue(count, stat.suffix)}
       </div>
 
       {/* Label */}
-      <div className="text-[11px] font-bold text-[#b5bac1] uppercase tracking-wider relative z-10">{stat.label}</div>
-      <div className="text-[10px] text-[#949ba4] mt-0.5 relative z-10">{stat.sublabel}</div>
+      <div className="text-[11px] font-bold uppercase tracking-wider relative z-10" style={{ color: 'var(--fg-muted, #b5bac1)' }}>{stat.label}</div>
+      <div className="text-[10px] mt-0.5 relative z-10" style={{ color: 'var(--fg-muted, #949ba4)' }}>{stat.sublabel}</div>
 
       {/* Progress bar */}
       <div className="mt-3 relative z-10">
-        <div className="h-1.5 bg-[#2b2d31] rounded-full overflow-hidden">
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--bg-secondary, #2b2d31)' }}>
           <div
             className="h-full rounded-full transition-all duration-1000 ease-out"
             style={{
@@ -140,15 +155,18 @@ export const StatsWidget = () => {
   const xpCount = useCountUp(totalXP, 2000, 800);
 
   return (
-    <div className="widget widget-animate bg-[#2b2d31] border-none shadow-xl">
+    <div className="widget widget-animate border-none shadow-xl" style={{ background: 'var(--bg-secondary, #2b2d31)' }}>
       {/* Header */}
       <div className="widget-header flex justify-between items-center mb-5">
         <div className="flex items-center gap-2">
-          <BarChart3 className="w-4 h-4 text-[#5865f2]" />
-          <span className="text-xs font-bold text-[#b5bac1] uppercase tracking-[0.02em]">Leaderboard / Stats</span>
+          <BarChart3 className="w-4 h-4" style={{ color: 'hsl(var(--primary))' }} />
+          <span className="text-xs font-bold uppercase tracking-[0.02em]" style={{ color: 'var(--fg-muted, #b5bac1)' }}>Leaderboard / Stats</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#1e1f22] text-[10px] font-bold text-accent-green">
+          <div
+            className="flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold text-accent-green"
+            style={{ background: 'var(--bg-main, #1e1f22)' }}
+          >
             <TrendingUp className="w-3 h-3" />
             ACTIVE
           </div>
@@ -163,23 +181,23 @@ export const StatsWidget = () => {
       </div>
 
       {/* XP Bar general */}
-      <div className="mt-5 p-3.5 rounded-xl bg-[#1e1f22] border border-white/5">
+      <div className="mt-5 p-3.5 rounded-xl border border-white/5" style={{ background: 'var(--bg-main, #1e1f22)' }}>
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Trophy className="w-4 h-4 text-[#f0b232]" />
-            <span className="text-xs font-bold text-[#dbdee1] uppercase tracking-wider">Experiencia Total</span>
+            <Trophy className="w-4 h-4" style={{ color: 'hsl(var(--accent-yellow))' }} />
+            <span className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--fg-main, #dbdee1)' }}>Experiencia Total</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Flame className="w-3.5 h-3.5 text-[#f47b67] animate-pulse" />
-            <span className="text-xs font-bold text-white tabular-nums">{xpCount.toLocaleString()} / {maxXP.toLocaleString()} XP</span>
+            <Flame className="w-3.5 h-3.5 animate-pulse" style={{ color: 'hsl(var(--accent-red))' }} />
+            <span className="text-xs font-bold tabular-nums" style={{ color: 'var(--fg-main, #dbdee1)' }}>{xpCount.toLocaleString()} / {maxXP.toLocaleString()} XP</span>
           </div>
         </div>
-        <div className="h-3 bg-[#2b2d31] rounded-full overflow-hidden relative">
+        <div className="h-3 rounded-full overflow-hidden relative" style={{ background: 'var(--bg-secondary, #2b2d31)' }}>
           <div
             className="h-full rounded-full transition-all duration-[2s] ease-out relative"
             style={{
               width: `${xpProgress}%`,
-              background: 'linear-gradient(90deg, #5865F2, #eb459e, #f0b232)',
+              background: `linear-gradient(90deg, var(--gradient-start, #5865F2), var(--gradient-end, #eb459e), hsl(var(--accent-yellow)))`,
               backgroundSize: '200% 100%',
               animation: 'shimmer 3s linear infinite',
             }}
@@ -188,11 +206,11 @@ export const StatsWidget = () => {
           </div>
         </div>
         <div className="flex items-center justify-between mt-1.5">
-          <span className="text-[10px] text-[#949ba4] flex items-center gap-1">
+          <span className="text-[10px] flex items-center gap-1" style={{ color: 'var(--fg-muted, #949ba4)' }}>
             <Award className="w-3 h-3" />
             Nivel 42
           </span>
-          <span className="text-[10px] text-[#949ba4]">
+          <span className="text-[10px]" style={{ color: 'var(--fg-muted, #949ba4)' }}>
             {maxXP - totalXP} XP para Nivel 43
           </span>
         </div>
