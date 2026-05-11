@@ -250,11 +250,15 @@ export const ColorPalettePicker = () => {
     <div className="fixed bottom-4 right-4 z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-3 rounded-full shadow-lg hover:scale-110 transition-all duration-200 group border border-white/10"
-        style={{ background: 'var(--bg-secondary, #2b2d31)' }}
+        className="p-3 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.5)] hover:scale-110 transition-all duration-200 group border backdrop-blur-md"
+        style={{ 
+          background: 'var(--bg-secondary, rgba(43, 45, 49, 0.85))',
+          borderColor: 'hsl(var(--primary) / 0.5)',
+          boxShadow: '0 0 15px hsl(var(--primary) / 0.25)'
+        }}
         title="Cambiar paleta de colores"
       >
-        <Palette className="w-5 h-5 text-primary group-hover:rotate-12 transition-transform" />
+        <Palette className="w-5 h-5 text-white drop-shadow-md group-hover:rotate-12 transition-transform" />
       </button>
 
       {isOpen && (

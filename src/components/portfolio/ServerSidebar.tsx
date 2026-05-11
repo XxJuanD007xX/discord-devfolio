@@ -2,6 +2,7 @@ import { LayoutGrid, Activity, Gamepad2, Compass, Download, MessageSquare, Brief
 import { useState, useEffect } from 'react';
 import { useSound } from '@/hooks/useSound';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { lenisScrollTo } from '@/hooks/useLenis';
 
 interface ServerSidebarProps {
     activeTab: string;
@@ -43,15 +44,16 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
         setIsMobileOpen(false);
 
         if (anchor) {
+            // Delay corto para esperar a que se monte el contenido tras cambio de tab
             setTimeout(() => {
-                const element = document.querySelector(anchor);
+                const element = document.querySelector(anchor) as HTMLElement | null;
                 if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
+                    lenisScrollTo(element, { duration: 1.4, offset: -32 });
                 }
             }, 150);
         } else {
-            // Al cambiar de pestaña principal, scroll al tope
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Al cambiar de pestaña principal, scroll suave al tope con Lenis
+            lenisScrollTo(0, { duration: 1.2, offset: 0 });
         }
     };
 
@@ -136,14 +138,16 @@ export const ServerSidebar = ({ activeTab, onTabChange }: ServerSidebarProps) =>
         <>
             {/* ===================== MOBILE HAMBURGER BUTTON ===================== */}
             <button
-                className={`lg:hidden fixed top-4 left-4 z-[60] p-2.5 rounded-xl shadow-lg border border-white/10 transition-all duration-300 hover:scale-105 active:scale-95 group ${isMobileOpen ? 'hidden' : ''}`}
+                className={`lg:hidden fixed top-4 left-4 z-[60] p-2.5 rounded-xl shadow-[0_4px_14px_rgba(0,0,0,0.5)] border backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 group ${isMobileOpen ? 'hidden' : ''}`}
                 style={{
-                    background: 'var(--bg-secondary, #2b2d31)',
+                    background: 'var(--bg-secondary, rgba(43, 45, 49, 0.85))',
+                    borderColor: 'hsl(var(--primary) / 0.5)',
+                    boxShadow: '0 0 15px hsl(var(--primary) / 0.25)'
                 }}
                 onClick={() => { setIsMobileOpen(true); playClick(); }}
                 aria-label="Abrir menú de navegación"
             >
-                <Menu className="w-5 h-5 transition-colors" style={{ color: 'var(--fg-main, #dbdee1)' }} />
+                <Menu className="w-5 h-5 text-white drop-shadow-md transition-colors" />
                 {/* Notification dot */}
                 <span
                     className="absolute -top-1 -right-1 w-3 h-3 rounded-full animate-pulse border-2"

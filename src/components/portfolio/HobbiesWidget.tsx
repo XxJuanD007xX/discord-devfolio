@@ -79,6 +79,18 @@ const hobbies = [
       { emoji: '💻', count: 4 },
     ],
   },
+  {
+    icon: Camera,
+    user: 'Wumpus',
+    message: 'Miren mi nuevo setup para programar por las noches! 🌌💻',
+    time: 'Hoy a las 15:05',
+    color: 'text-accent-cyan',
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
+    reactions: [
+      { emoji: '🔥', count: 18 },
+      { emoji: '👀', count: 5 },
+    ],
+  },
 ];
 
 export const HobbiesWidget = () => {
@@ -151,6 +163,18 @@ export const HobbiesWidget = () => {
                 <span className="text-[10px] text-muted-foreground font-medium">{hobby.time}</span>
               </div>
               <p className="text-[15px] text-[#dbdee1] leading-[1.375rem]">{hobby.message}</p>
+
+              {/* Optional Image Attachment */}
+              {'image' in hobby && hobby.image && (
+                <div className="mt-2 max-w-[350px] rounded-lg overflow-hidden border border-[#1e1f22] hover:border-[#5865f2]/50 transition-colors">
+                  <img 
+                    src={hobby.image as string} 
+                    alt="Chat attachment" 
+                    className="w-full h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
+              )}
 
               {/* Reactions - Con animación pop mejorada */}
               <div className="flex flex-wrap gap-1.5 mt-2">

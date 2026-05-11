@@ -15,18 +15,16 @@ const speeches = [
 
 export const AvatarSpeech = () => {
   const [currentSpeech, setCurrentSpeech] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const showSpeech = () => {
       const randomSpeech = speeches[Math.floor(Math.random() * speeches.length)];
       setCurrentSpeech(randomSpeech);
-      setIsVisible(true);
 
       // Animate in
       gsap.fromTo(
         '.speech-bubble',
-        { opacity: 0, scale: 0.8, y: 10 },
+        { opacity: 0, scale: 0.8, y: 10, display: 'block' },
         { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'back.out(1.7)' }
       );
 
@@ -37,7 +35,9 @@ export const AvatarSpeech = () => {
           scale: 0.8,
           y: -10,
           duration: 0.3,
-          onComplete: () => setIsVisible(false),
+          onComplete: () => {
+            gsap.set('.speech-bubble', { display: 'none' });
+          }
         });
       }, 4000);
     };
@@ -47,7 +47,6 @@ export const AvatarSpeech = () => {
 
     // Show random speech every 8-15 seconds
     const interval = setInterval(() => {
-      const randomDelay = Math.random() * 7000 + 8000;
       setTimeout(showSpeech, 0);
     }, 12000);
 
@@ -57,10 +56,8 @@ export const AvatarSpeech = () => {
     };
   }, []);
 
-  if (!isVisible) return null;
-
   return (
-    <div className="speech-bubble absolute top-4 left-[85%] z-20 pointer-events-none">
+    <div className="speech-bubble absolute top-4 left-[85%] z-20 pointer-events-none hidden">
       <div className="relative bg-white text-black rounded-[18px] px-3 py-1.5 shadow-xl min-w-[120px] max-w-[220px]">
         {/* Speech bubble tail - Discord style */}
         <div className="absolute -left-1.5 top-1/2 -translate-y-1/2">

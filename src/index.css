@@ -766,6 +766,85 @@
     animation: typing-cursor 1s step-end infinite;
   }
 
+  /* Equalizer bars (Spotify activity playing indicator) */
+  @keyframes eq-bar {
+
+    0%,
+    100% {
+      height: 20%;
+      opacity: 0.7;
+    }
+
+    25% {
+      height: 65%;
+      opacity: 0.9;
+    }
+
+    50% {
+      height: 100%;
+      opacity: 1;
+    }
+
+    75% {
+      height: 45%;
+      opacity: 0.85;
+    }
+  }
+
+  .animate-eq-bar {
+    height: 20%;
+    animation: eq-bar 0.95s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    will-change: height;
+  }
+
+  /* Premium avatar halo — conic gradient rotation */
+  @keyframes halo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-halo-spin {
+    animation: halo-spin 6s linear infinite;
+  }
+
+  @keyframes halo-spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  .animate-halo-spin-reverse {
+    animation: halo-spin-reverse 8s linear infinite;
+  }
+
+  /* Premium glow pulse */
+  @keyframes premium-glow {
+
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.9;
+      transform: scale(1.08);
+    }
+  }
+
+  .animate-premium-glow {
+    animation: premium-glow 3.5s ease-in-out infinite;
+  }
+
   /* Scale breathe para city background */
   @keyframes breathe {
 

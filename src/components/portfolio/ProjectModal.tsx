@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import type { Project } from './ProjectsWidget';
 
@@ -26,6 +27,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
         }}
       >
         <DialogTitle className="sr-only">Project Details: {project.title}</DialogTitle>
+        <DialogDescription className="sr-only">Detailed view of the project {project.title}</DialogDescription>
 
         <div
           className="w-full relative rounded-xl overflow-hidden flex flex-col max-h-[90vh]"

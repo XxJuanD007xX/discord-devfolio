@@ -380,15 +380,19 @@ export const ActivityWidget = () => {
         style={{ background: 'var(--bg-secondary, #2b2d31)' }}
       >
         <div
-          className="flex items-center justify-between text-[11px]"
+          className="flex flex-col sm:flex-row items-center justify-between text-[11px] gap-2 text-center sm:text-left"
           style={{ color: 'var(--fg-muted, #949ba4)' }}
         >
-          <div className="flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5" />
-            <span>Pipeline activa · Última actualización hoy</span>
+          <div className="flex flex-col sm:flex-row items-center gap-1.5 leading-tight">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 shrink-0" />
+              <span>Pipeline activa</span>
+            </div>
+            <span className="hidden sm:inline">·</span>
+            <span>Última actualización hoy</span>
           </div>
           <div
-            className="flex items-center gap-1.5 font-bold"
+            className="flex items-center gap-1.5 font-bold shrink-0 mt-1 sm:mt-0"
             style={{ color: 'hsl(var(--accent-green))' }}
           >
             <div

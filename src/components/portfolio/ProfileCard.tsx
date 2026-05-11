@@ -1,8 +1,9 @@
-import { Github, Linkedin, Mail, ExternalLink, Twitter, Sparkles, Zap, Award, Coffee, Code, Rocket, Heart, Sword, Shield, Home, Pencil, Star, Download, Circle, Moon, MinusCircle } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, Twitter, Sparkles, Sword, Shield, Home, Download, Circle, Moon, MinusCircle } from 'lucide-react';
 import patoGif from '@/assets/pato.gif';
 import bannerImage from '@/assets/banner.gif';
 import cityImage from '@/assets/city.gif';
 import { AvatarSpeech } from './AvatarSpeech';
+import { SpotifyActivity } from './SpotifyActivity';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,7 +16,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 const statuses: Array<'online' | 'idle' | 'dnd' | 'invisible'> = ['online', 'idle', 'dnd', 'invisible'];
 
@@ -30,16 +31,6 @@ const skills = [
   { name: 'Docker', color: 'bg-accent-cyan' },
   { name: 'GraphQL', color: 'bg-accent-pink' },
   { name: 'Tailwind', color: 'bg-accent-cyan' },
-];
-
-const decorativeTags = [
-  { icon: Sparkles, label: 'admin', color: 'text-accent-blue' },
-  { icon: Zap, label: 'moderators', color: 'text-accent-green' },
-  { icon: Award, label: 'tea time', color: 'text-accent-purple' },
-  { icon: Coffee, label: 'party planners', color: 'text-accent-orange' },
-  { icon: Code, label: 'movie night', color: 'text-accent-yellow' },
-  { icon: Rocket, label: 'book club', color: 'text-accent-red' },
-  { icon: Heart, label: 'tabletop gamers', color: 'text-accent-blue' },
 ];
 
 const socialLinks = [
@@ -131,54 +122,92 @@ export const ProfileCard = () => {
           onMouseEnter={() => setIsAvatarHovered(true)}
           onMouseLeave={() => setIsAvatarHovered(false)}
         >
-          {/* Ring rainbow animado externo (glow intenso) */}
-          <div className="absolute inset-0 -m-2 rounded-full animate-rainbow-border border-4 border-transparent" />
+          {/* ====== PREMIUM HALO — 4 layered light effects ====== */}
 
-          {/* Ring gradient animado externo (glow pulse) */}
-          <div className="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[#5865F2] via-[#eb459e] via-[#f0b232] to-[#5865F2] opacity-80 blur-md animate-pulse-glow" />
+          {/* Capa 1: Glow ambiental amplio difuminado (la "atmósfera") */}
+          <div
+            className="absolute inset-0 -m-5 rounded-full pointer-events-none animate-premium-glow"
+            style={{
+              background:
+                'radial-gradient(circle at center, hsl(var(--primary-glow) / 0.55) 0%, hsl(330, 100%, 65%, 0.25) 35%, transparent 70%)',
+              filter: 'blur(14px)',
+            }}
+          />
 
-          {/* Ring gradient animado interno (definido) */}
-          <div className="absolute inset-0 -m-0.5 rounded-full bg-gradient-to-r from-[#5865F2] via-[#eb459e] via-[#f0b232] to-[#5865F2]" style={{ animation: 'spin-slow 3s linear infinite' }} />
+          {/* Capa 2: Conic gradient rotating (multicolor halo) */}
+          <div
+            className="absolute inset-0 -m-2 rounded-full pointer-events-none animate-halo-spin opacity-80"
+            style={{
+              background:
+                'conic-gradient(from 0deg, #5865F2, #eb459e, #f0b232, #3ba55d, #00c2a8, #5865F2)',
+              filter: 'blur(6px)',
+            }}
+          />
+
+          {/* Capa 3: Conic gradient inverso rotando al revés (más vibrante, menos blur) */}
+          <div
+            className="absolute inset-0 -m-1 rounded-full pointer-events-none animate-halo-spin-reverse"
+            style={{
+              background:
+                'conic-gradient(from 180deg, #eb459e, #5865F2, #00c2a8, #f0b232, #eb459e)',
+              opacity: 0.7,
+              filter: 'blur(2px)',
+            }}
+          />
+
+          {/* Capa 4: Anillo definido más interno (el borde más nítido) */}
+          <div
+            className="absolute inset-0 -m-0.5 rounded-full pointer-events-none"
+            style={{
+              background:
+                'conic-gradient(from 90deg, #5865F2, #eb459e, #f0b232, #3ba55d, #5865F2)',
+              animation: 'halo-spin 4s linear infinite',
+            }}
+          />
 
           {/* Avatar PATO con efecto de animación wobble */}
-          <div
-            className="relative z-10 p-1.5 bg-[var(--bg-secondary,#2b2d31)] rounded-full cursor-pointer"
-            onClick={handleAvatarClick}
-            style={{
-              transform: clickCount > 10 ? `scale(${Math.min(1 + (clickCount - 10) * 0.02, 1.3)}) rotate(${clickCount * 5}deg)` : 'none',
-              transition: 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-            }}
-          >
-            <img
-              src={patoGif}
-              alt="Pato Avatar"
-              className={`avatar relative z-10 transition-all duration-300 w-24 h-24 object-cover rounded-full ${isAvatarHovered ? 'scale-105' : ''} ${clickCount > 0 ? 'animate-pop-reaction' : ''}`}
-              style={{ borderColor: 'var(--bg-secondary, #2b2d31)' }}
-            />
-
-            {/* Easter egg message */}
+          <div className="relative z-10">
+            {/* Easter egg message (Outside rotating container) */}
             {clickCount >= 10 && (
-              <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-[var(--primary)] text-white text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap animate-slide-up-fade pointer-events-none z-50">
-                ¡Nivel Secreto Desbloqueado! 🦆
-                <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--primary)] rotate-45" />
+              <div className="absolute -top-14 left-1/2 -translate-x-1/2 bg-[var(--primary)] text-white text-[12px] font-bold px-3 py-1.5 rounded-xl shadow-2xl whitespace-nowrap animate-bounce pointer-events-none z-[60] flex items-center gap-1.5 border border-white/20">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>¡Nivel Secreto Desbloqueado!</span>
+                <span className="text-sm">🦆</span>
+                <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[var(--primary)] border-b border-r border-white/20 rotate-45 rounded-sm" />
               </div>
             )}
 
-            {/* Particles */}
-            {particles.map(p => (
-              <div
-                key={p.id}
-                className="absolute pointer-events-none text-xl z-50 animate-particle-float"
-                style={{
-                  left: p.x,
-                  top: p.y,
-                  transform: `translate(-50%, -50%) rotate(${Math.random() * 60 - 30}deg)`,
-                  textShadow: '0 2px 10px rgba(0,0,0,0.5)'
-                }}
-              >
-                {p.emoji}
-              </div>
-            ))}
+            <div
+              className="p-1.5 bg-[var(--bg-secondary,#2b2d31)] rounded-full cursor-pointer relative"
+              onClick={handleAvatarClick}
+              style={{
+                transform: clickCount > 10 ? `scale(${Math.min(1 + (clickCount - 10) * 0.02, 1.3)}) rotate(${clickCount * 5}deg)` : 'none',
+                transition: 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+              }}
+            >
+              <img
+                src={patoGif}
+                alt="Pato Avatar"
+                className={`avatar relative z-10 transition-all duration-300 w-24 h-24 object-cover rounded-full ${isAvatarHovered ? 'scale-105' : ''} ${clickCount > 0 ? 'animate-pop-reaction' : ''}`}
+                style={{ borderColor: 'var(--bg-secondary, #2b2d31)' }}
+              />
+
+              {/* Particles */}
+              {particles.map(p => (
+                <div
+                  key={p.id}
+                  className="absolute pointer-events-none text-xl z-50 animate-particle-float"
+                  style={{
+                    left: p.x,
+                    top: p.y,
+                    transform: `translate(-50%, -50%) rotate(${Math.random() * 60 - 30}deg)`,
+                    textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+                  }}
+                >
+                  {p.emoji}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Status indicator (Interactive Dropdown) */}
@@ -222,7 +251,7 @@ export const ProfileCard = () => {
       </div>
 
       {/* Profile Info */}
-      <div className="p-4 pt-2 pb-4 lg:pb-32 relative z-10">
+      <div className="p-4 pt-2 pb-4 relative z-10">
         {/* Name and Username */}
         <div className="mb-2">
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -296,32 +325,9 @@ export const ProfileCard = () => {
           </div>
         </div>
 
-        {/* Roles Section - Matching the image more closely */}
+        {/* Spotify Activity (reemplaza Roles) */}
         <div className="mb-4">
-          <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
-            Roles
-          </h3>
-          <div className="flex flex-wrap gap-1.5">
-            {decorativeTags.map((tag, index) => (
-              <Tooltip key={tag.label} delayDuration={200}>
-                <TooltipTrigger asChild>
-                  <span
-                    className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-secondary/80 text-[11px] font-medium role-tag-animate hover:bg-secondary hover:text-foreground transition-colors cursor-pointer"
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  >
-                    <span className={`w-2.5 h-2.5 rounded-full ${tag.color.replace('text-', 'bg-')}`} style={{ backgroundColor: `hsl(var(--accent-${tag.color.split('-').pop()}))` }} />
-                    <span className="text-secondary-foreground">{tag.label}</span>
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent side="top" className="bg-[#111214] text-white border-none shadow-xl text-xs font-bold leading-none py-2 px-3">
-                  Discord Role: {tag.label}
-                </TooltipContent>
-              </Tooltip>
-            ))}
-            <button className="w-6 h-6 flex items-center justify-center rounded-full bg-secondary hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-              +
-            </button>
-          </div>
+          <SpotifyActivity />
         </div>
 
         {/* Divider */}
@@ -338,7 +344,7 @@ export const ProfileCard = () => {
                 <TooltipTrigger asChild>
                   <span
                     className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-secondary/40 text-[11px] font-medium role-tag-animate border border-border/50 hover:border-primary/50 hover:bg-primary/10 transition-colors cursor-default"
-                    style={{ animationDelay: `${(index + decorativeTags.length) * 0.05}s` }}
+                    style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className={`w-2 h-2 rounded-sm ${skill.color}`} style={skill.color !== 'bg-foreground' ? { backgroundColor: `hsl(var(--accent-${skill.color.split('-').pop()}))` } : {}} />
                     <span className="text-secondary-foreground/90">{skill.name}</span>

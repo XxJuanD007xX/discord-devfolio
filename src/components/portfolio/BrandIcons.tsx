@@ -7,13 +7,14 @@ interface IconProps extends React.SVGAttributes<SVGElement> {
 
 // All SVG paths sourced from https://simpleicons.org (viewBox 0 0 24 24)
 export const BrandIcons = {
-    // Antigravity (Google AI IDE) — Stylized "A" lifting off / weightlessness concept
+    // Antigravity (Google AI IDE) — Official Color Logo
     Antigravity: (props: IconProps) => (
-        <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-            <path d="M12 2L4 20h3.5l2.2-5h4.6l2.2 5H20L12 2zm-1.8 12L12 6.5 13.8 14h-3.6z" />
-            <path d="M12 2L4 20h16L12 2z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 2" opacity="0.3"/>
-            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.2" />
-        </svg>
+        <img
+            src="/antigravity-color.svg"
+            alt="Antigravity Logo"
+            className={props.className}
+            style={{ width: '65%', height: '65%', objectFit: 'contain', margin: 'auto' }}
+        />
     ),
 
     // Warp Terminal — Real Simple Icons
@@ -234,9 +235,9 @@ export const BrandIcons = {
     TestSprite: (props: IconProps) => (
         <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5l-4-4 1.41-1.41L11 13.67l6.59-6.59L19 8.5l-8 8z" />
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5l-4-4 1.41-1.41L11 13.67l6.59-6.59L19 8.5l-8 8z" opacity="0.5" transform="scale(0.8) translate(3 3)"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5l-4-4 1.41-1.41L11 13.67l6.59-6.59L19 8.5l-8 8z" opacity="0.5" transform="scale(0.8) translate(3 3)" />
             <circle cx="19" cy="5" r="1.5" />
-            <circle cx="21" cy="8" r="1" opacity="0.6"/>
+            <circle cx="21" cy="8" r="1" opacity="0.6" />
         </svg>
     ),
 
